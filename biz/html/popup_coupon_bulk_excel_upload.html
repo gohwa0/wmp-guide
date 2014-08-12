@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>티켓 일괄(대량) 처리</title>
+
+		<link href="../css/dealer.css" rel="stylesheet" type="text/css" />
+		<!--
+		<link href="/css/new/dealer/dealer.css" type="text/css" rel="stylesheet" />
+		-->
+
+	</head>
+	<body onload="window.resizeTo(500, 615);"> <!-- onload="window.resizeTo(500, 395);" --><!-- onload="window.resizeTo(500, 610);" --> <!-- onload="window.resizeTo(470, 285);"--><!-- onload="window.resizeTo(470, 499);"-->
+		<div class="pop_cnt pop_cnt_foot">
+			<h1>티켓 일괄(대량) 처리</h1>
+			<div class="pop_txt_center">
+				파일이 성공적으로 업로드 되었습니다.
+			</div>
+			<div class="box_gray">
+				<p class="box_gray_p ticket_result">
+					<span>· 전체티켓 : <strong>0</strong>개</span>
+					<span>· 업로드완료 : <strong class="v_green">0</strong>개</span>
+					<span>· 실패 : <strong class="v_red">0</strong>개</span>
+				</p>
+			</div>
+
+			<!--업로드 완료나 실패가 있을 시  style="display:none"-->
+			<div class="result_list">
+				<p class="result_cmt">현재<strong class="v_red">222</strong>개의 티켓에 오류가 있습니니다.<br />파일 수정 후 다시 업로드 하시기 바랍니다.</p>
+				<div class="result_list_in">
+					<table class="pop_table_v2">
+						<tr><th scope="col">coupon_code</th><td><span  class="v_green">message</span></td></tr>
+						<tr><th scope="col">coupon_code</th><td><span  class="v_green">message</span></td></tr>
+						<tr><th scope="col">coupon_code</th><td><span  class="v_red">message</span></td></tr>
+					</table>
+				</div>
+			</div>
+				
+			<div class="btn_area">			
+				<button type="button" class="btn_wht_big" onclick="window.close();">
+					닫기
+				</button>
+			</div>	
+			<div class="pop_foot">
+				<div class="btn_area_down">
+					<button type="button" onclick="save_excel_data();" class="btn_icon_file">
+						엑셀저장
+					</button>
+				</div>
+			</div>	
+			<form id="frm" action="down_coupon_result_excel" method="post" target="frm_null">
+				<input type="hidden" name="result" value="" />
+			</form>
+			<iframe name="frm_null" src='' width="0" height="0"></iframe>
+		</div>
+		<script src = "/js/_jquery/jquery-1.7.2.min.js" type="text/javascript"></script>
+		<script type="text/javascript" language="javascript">
+			opener.$('#use_coupon').submit();
+			var excel_result_data = '[]';
+			function save_excel_data() {
+				$("input[name='result']").val(excel_result_data);
+				$("#frm").submit();
+			}
+		</script>
+	</body>
+</html>
+
+<!-- 원본
+	<body class="popup_win" onload="window.resizeTo(470, 285);">
+
+		<div class="pop_wrap">
+			<div class="pop_in">
+				<h1 class="ir h_process">티켓 일괄 처리</h1>
+				<div class="success_cmt">
+					파일이 성공적으로 업로드 되었습니다.
+				</div>
+				<div class="pop_cnt">
+					<p class="ticket_result">
+						<span>· 전체티켓 : <strong>0</strong>개</span>
+						<span>· 업로드완료 : <strong class="v_green">0개</strong></span>
+						<span>· 실패 : <strong class="v_red">0</strong>개</span>
+					</p>
+				</div>
+				<button type="button" class="btn btn_pop_close_btm" onclick="window.close();">
+					닫기
+				</button>
+				<div align="right">
+					<button type="button" onclick="save_excel_data();">
+						엑셀저장
+					</button>
+				</div>
+			</div>
+			<button type="button" class="ir btn_pop_close" onclick="window.close();">
+				닫기
+			</button>
+			<form id="frm" action="down_coupon_result_excel" method="post" target="frm_null">
+				<input type="hidden" name="result" value="" />
+			</form>
+			<iframe name="frm_null" src='' width=0 height=0></iframe>
+		</div>
+		<script src = "/js/_jquery/jquery-1.7.2.min.js" type="text/javascript"></script>
+		<script type="text/javascript" language="javascript">
+			opener.$('#use_coupon').submit();
+			var excel_result_data = '[]';
+			function save_excel_data() {
+				$("input[name='result']").val(excel_result_data);
+				$("#frm").submit();
+			}
+		</script>
+	</body>
+-->

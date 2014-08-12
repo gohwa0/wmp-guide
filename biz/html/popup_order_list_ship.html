@@ -1,0 +1,703 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>송장번호 일괄 업로드</title>
+		<link href="../css/dealer.css" rel="stylesheet" type="text/css" />
+
+		<script src="/js/_jquery/jquery-1.4.2.min.js?123456789" type="text/javascript"></script>
+		<script type="text/javascript" src="/js/_jquery/plugin/jquery.ajaxupload.3.5.js?7326811" ></script>
+		<script type="text/javascript" language="javascript">
+			var dtd_companys = new Array();
+			dtd_companys["우체국택배"] = new Array(13, "http://service.epost.go.kr/trace.RetrieveRegiPrclDeliv.postal?sid1=", "1234567890123 (13자리)", "1588-1300", "http://parcel.epost.go.kr");
+			dtd_companys["우체국등기"] = new Array(13, "http://service.epost.go.kr/iservice/trace/Trace_ok.jsp?sid1=", "1234567890123 (13자리)", "1588-1300", "http://parcel.epost.go.kr");
+			dtd_companys["대한통운"] = new Array(12, "https://www.doortodoor.co.kr/parcel/doortodoor.do?fsp_action=PARC_ACT_002&fsp_cmd=retrieveInvNoACT&invc_no=", "1234567890 (10자리)", "1588-1255", "http://www.doortodoor.co.kr");
+			dtd_companys["한진택배"] = new Array(12, "http://www.hanjin.co.kr/Delivery_html/inquiry/result_waybill.jsp?wbl_num=", "1234567890 (10,12자리)", "1588-0011", "http://hanex.hanjin.co.kr");
+			dtd_companys["로젠택배"] = new Array(11, "http://www.ilogen.com/iLOGEN.Web.New/TRACE/TraceView.aspx?gubun=slipno&slipno=", "12345678901 (11자리)", "1588-9988", "http://www.ilogen.com");
+			dtd_companys["현대택배"] = new Array(12, "http://www.hlc.co.kr/hydex/jsp/tracking/trackingViewCus.jsp?InvNo=", "1234567890 (10,12자리)", "1588-2121", "http://www.hlc.co.kr");
+			dtd_companys["KG옐로우캡택배"] = new Array(11, "http://www.yellowcap.co.kr/custom/inquiry_result.asp?invoice_no=", "12345678901 (11자리)", "1588-0123", "http://www.yellowcap.co.kr");
+			dtd_companys["KGB택배"] = new Array(10, "http://www.kgbls.co.kr/sub5/trace.asp?f_slipno=", "1234567890 (10자리)", "1577-4577", "http://www.kgbls.co.kr");
+			dtd_companys["EMS"] = new Array(13, "http://service.epost.go.kr/trace.RetrieveEmsTrace.postal?ems_gubun=E&POST_CODE=", "EE123456789KR (13자리)", "1588-1300", "http://service.epost.go.kr");
+			dtd_companys["DHL"] = new Array(0, "http://www.dhl.co.kr/publish/kr/ko/eshipping/track.high.html?pageToInclude=RESULTS&type=fasttrack&AWB=", "1234567890 (10자리)", "1588-0001", "http://www.dhl.co.kr");
+			dtd_companys["한덱스"] = new Array(10, "http://btob.sedex.co.kr/work/app/tm/tmtr01/tmtr01_s4.jsp?IC_INV_NO=", "1234567890 (10자리)", "1588-9040", "http://www.e-handex.co.kr");
+			dtd_companys["FedEx"] = new Array(12, "http://www.fedex.com/Tracking?ascend_header=1&clienttype=dotcomreg&cntry_code=kr&language=korean&tracknumbers=", "123456789012 (12자리)", "080-023-8000", "http://www.fedex.com/kr");
+			dtd_companys["동부익스프레스"] = new Array(12, "http://www.dongbups.com/newHtml/delivery/dvsearch_View.jsp?item_no=", "123456789012 (12자리)", "1588-8848", "http://www.dongbups.com");
+			dtd_companys["CJ GLS"] = new Array(12, "http://nexs.cjgls.com/web/service02_01.jsp?slipno=", "123456789012 (12자리)", "1588-5353", "http://www.cjgls.co.kr");
+			dtd_companys["UPS"] = new Array(25, "http://www.ups.com/WebTracking/track?loc=ko_KR&InquiryNumber1=", "M1234567890 (최대 25자리)", "1588-6886", "http://www.ups.com/content/kr/ko/index.jsx");
+			dtd_companys["하나로택배"] = new Array(10, "http://www.hanarologis.com/branch/chase/listbody.html?a_gb=center&a_cd=4&a_item=0&fr_slipno=", "1234567890 (최대 10자리)", "1577-2828", "http://www.hanarologis.com");
+			dtd_companys["대신택배"] = new Array(13, "http://home.daesinlogistics.co.kr/daesin/jsp/d_freight_chase/d_general_process2.jsp?", "1234567890123 (13자리)", "043-222-4582", "http://apps.ds3211.co.kr");
+			dtd_companys["경동택배"] = new Array(11, "http://www.kdexp.com/sub3_shipping.asp?stype=1&p_item=", "12345678901 (최대11자리)", "031-460-2400", "http://www.kdexp.com/");
+			dtd_companys["이노지스택배"] = new Array(13, "http://www.innogis.net/trace02.asp?invoice=", "1234567890123 (최대13자리)", "1566-4082", "http://www.innogis.net/");
+			dtd_companys["일양로지스택배"] = new Array(9, "http://www.ilyanglogis.com/functionality/tracking_result.asp?hawb_no=", "123456789 (9자리)", "1588-0002", "http://www.ilyanglogis.com/");
+			dtd_companys["CVSnet 편의점택배"] = new Array(10, "http://was.cvsnet.co.kr/src/ctod_status.jsp?invoice_no=", "1234567890 (10자리)", "1566-1025", "http://www.cvsnet.co.kr/");
+			dtd_companys["TNT Express"] = new Array(13, "http://www.tnt.com/webtracker/tracking.do?respCountry=kr&respLang=ko&searchType=CON&cons=", "GE123456789WW (9,13자리)", "1588-0588", "http://www.tnt.com/express/ko_kr/site/home.html");
+			dtd_companys["HB한방택배"] = new Array(12, "http://www.hbtb.co.kr/search/s_search.asp?f_slipno=", "123456789012 (12자리)", "1588-1059", "http://www.hbtb.co.kr/");
+			dtd_companys["GTX로지스"] = new Array(12, "http://www.gtxlogis.co.kr/tracking/default.asp?awblno=", "123456789012 (11~12자리)", "1588-1756", "http://www.gtxlogis.co.kr");
+			dtd_companys["천일택배"] = new Array(11, "http://www.cyber1001.co.kr/HTrace/HTrace.jsp?transNo=", "12345678901 (11자리)", "", "http://www.cyber1001.co.kr");
+			dtd_companys["고려택배"] = new Array(17, "http://klogis.com/03_business/01_tracking_detail_bcno.asp?bcno=", "12345678901111111 (17자리)", "", "http://klogis.com/main.asp");
+			dtd_companys["GSM"] = new Array(13, "http://www.gsmnton.com/gsm/handler/Tracking-OrderList?searchType=TrackNo&trackNo=", "1234567890111 (우체국-13,대한통운-10자리)", "02-517-0775", "http://www.gsmnton.com");
+			dtd_companys["CJ대한통운"] = new Array(12, "https://www.doortodoor.co.kr/parcel/doortodoor.do?fsp_action=PARC_ACT_002&fsp_cmd=retrieveInvNoACT&invc_no=", "1234567890 (10자리)", "1588-1255", "http://www.doortodoor.co.kr");
+			dtd_companys["합동택배"] = new Array(16, "http://www.hdexp.co.kr/parcel/order_result.asp?p_item=", "1234567890123456 (7~16자리)", "031-460-2400", "http://www.hdexp.co.kr/");
+
+			var company;
+
+			function replaceAll(str, searchStr, replaceStr) {
+				return str.split(searchStr).join(replaceStr);
+			}
+
+			function doorToDoorSearch(query) {
+				var msg = checkValidDoor(query);
+				if (msg != '') {
+					alert(msg);
+					return false;
+				}
+				var url = "";
+
+				/* 링크만들기 */
+				if (company == "대신택배") {
+					url = dtd_companys[company][1];
+					url += "billno1=" + query.substring(0, 4);
+					url += "&billno2=" + query.substring(4, 7);
+					url += "&billno3=" + query.substring(7, 13);
+				} else if (dtd_companys[company][1]) {
+					url = dtd_companys[company][1] + query;
+				}
+
+				window.open(url, "_blank");
+			}
+
+			function isNumeric(s) {
+				var count = 0;
+				for ( i = 0; i < s.length; i++) {
+
+					if (s.charAt(i) < '0' || s.charAt(i) > '9') {
+						count++;
+					}
+				}
+				if (count > 0) {
+					return 0;
+				} else {
+					return 1;
+				}
+			}
+
+			function SetDeleveryContents(idx) {
+				company = dtd_select_obj.options[idx].value;
+				document.getElementById("Dcs01").innerHTML = dtd_companys[company][2];
+				document.getElementById("Dcs02").innerHTML = company;
+				document.getElementById("Dcs03").innerHTML = dtd_companys[company][3];
+				document.getElementById("Dcs04").href = dtd_companys[company][4];
+				document.getElementById("Dcs04").target = "_blank";
+
+			}
+
+			function checkValidDoor(query) {
+				var message = '';
+				/* 운송장 번호 값 확인 */
+				if (company == "UPS") {
+					var pattern1 = /^[0-9a-zA-Z]{9,12}$/i;
+					var pattern2 = /^[0-9a-zA-Z]{18}$/i;
+					var pattern3 = /^[0-9a-zA-Z]{25}$/i;
+					if (query.search(pattern1) == -1 && query.search(pattern2) == -1 && query.search(pattern3) == -1) {
+						message = company + "의 운송장 번호 패턴에 맞지 않습니다.";
+						//query_obj.focus();
+					}
+				} else if (company == "EMS") {
+					var pattern = /^[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}$/;
+					if (query.search(pattern) == -1) {
+						message = company + "의 운송장 번호 패턴에 맞지 않습니다.";
+						//query_obj.focus();
+					}
+				} else if (company == "한진택배" || company == "현대택배" || company == "대한통운" || company == "CJ대한통운") {
+					if (!isNumeric(query)) {
+						message = "운송장 번호는 숫자만 입력해주세요.";
+						//query_obj.focus();
+					} else if (query.length != 10 && query.length != 12) {
+						message = company + "의 운송장 번호는 10자리 또는 12자리의 숫자로 입력해주세요.";
+						//query_obj.focus();
+					}
+				} else if (company == "경동택배") {
+					if (!isNumeric(query)) {
+						message = "운송장 번호는 숫자만 입력해주세요.";
+						//query_obj.focus();
+					} else if (query.length < 9 || query.length > 16) {
+						message = company + "의 운송장 번호는 9자리에서 16자리의 숫자로 입력해주세요.";
+						//query_obj.focus();
+					}
+				} else if (company == "이노지스택배") {
+					if (!isNumeric(query)) {
+						message = "운송장 번호는 숫자만 입력해주세요.";
+						//query_obj.focus();
+					} else if (query.length > 13) {
+						message = company + "의 운송장 번호는 최대 13자리의 숫자로 입력해주세요.";
+						//query_obj.focus();
+					}
+				} else if (company == "TNT Express") {
+					var pattern1 = /^[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}$/;
+					var pattern2 = /^[0-9]{9}$/;
+					if (query.search(pattern1) == -1 && query.search(pattern2) == -1) {
+						message = company + "의 운송장 번호 패턴에 맞지 않습니다.";
+						//query_obj.focus();
+					}
+
+				} else if (company == "SC 로지스" || company == "한진택배" || company == "현대택배") {
+					if (!isNumeric(query)) {
+						message = "운송장 번호는 숫자만 입력해주세요.";
+					} else if (query.length != 10 && query.length != 12) {
+						message = company + "의 운송장 번호는 10자리 또는 12자리의 숫자로 입력해주세요.";
+					}
+				} else if (company == "일양로지스택배") {
+					if (!isNumeric(query)) {
+						message = "운송장 번호는 숫자만 입력해주세요.";
+					} else if (query.length != 9 && query.length != 10) {
+						message = company + "의 운송장 번호는 9자리 또는 10자리의 숫자로 입력해주세요.";
+					}
+				} else if (company == "GSM") {
+					if (!isNumeric(query)) {
+						message = "운송장 번호는 숫자만 입력해주세요.";
+					} else if (query.length != 10 && query.length != 13) {
+						message = company + "의 운송장 번호는 10자리 또는 13자리 숫자로 입력해주세요.";
+					}
+				} else if (company == "합동택배") {
+					if (!isNumeric(query)) {
+						message = "운송장 번호는 숫자만 입력해주세요.";
+					} else if ((query.length < 7) || (query.length > 16)) {
+						message = company + "의 운송장 번호는 7자리 이상  16자리 이하의 숫자로 입력해주세요.";
+					}
+				} else if (company == "GTX로지스") {
+					if (!isNumeric(query)) {
+						message = "운송장 번호는 숫자만 입력해주세요.";
+					} else if ((query.length != 11) && (query.length != 12)) {
+						message = company + "의 운송장 번호는 11~12 자리 숫자로 입력해주세요.";
+					}
+				} else {
+					if (!isNumeric(query)) {
+						message = "운송장 번호는 숫자만 입력해 주세요.";
+					} else if (dtd_companys[company][0] > 0 && dtd_companys[company][0] != query.length) {
+						message = company + "의 운송장 번호는 " + dtd_companys[company][0] + "자리의 숫자로 입력해 주세요.";
+					}
+				}
+				return message;
+			}
+
+			function set_link(dtd_select_obj) {
+				company = dtd_select_obj.options[dtd_select_obj.selectedIndex].value;
+				var invoice_arr = $('.invoice_no');
+				var status_arr = $('.invoice_status');
+				var tab_cnt = new Array(0, 0);
+				for (var i = 0; i < invoice_arr.length; i++) {
+					if ($(status_arr[i]).html().indexOf('주문번호 오류') < 0) {
+						if ('' != checkValidDoor($(invoice_arr[i]).attr("id"))) {
+							if (!$(status_arr[i]).hasClass('v_red')) {
+								$(status_arr[i]).removeClass('v_green');
+								$(status_arr[i]).addClass('v_red');
+								$(status_arr[i]).attr('name', 'deliver_error');
+								$(status_arr[i]).html('송장번호 오류');
+							}
+						} else {
+							if (!$(status_arr[i]).hasClass('v_red') || $(status_arr[i]).attr('name') == 'deliver_error') {
+								$(status_arr[i]).removeClass('v_red');
+								$(status_arr[i]).removeClass('v_green');
+								$(status_arr[i]).addClass('v_green');
+								$(status_arr[i]).removeAttr('name');
+								$(status_arr[i]).html('택배사 정상');
+							}
+						}
+						$(invoice_arr[i]).html('<input type="button" value="[' + company + '] ' + $(invoice_arr[i]).attr("id") + '" />');
+					}
+				}
+				$('.v_green').each(function() {
+					tab_cnt[0] += 1;
+				});
+				tab_cnt[1] = $('.tab_cnt').attr('tab_total') - tab_cnt[0];
+				$('.tab_cnt').eq(1).text('업로드 가능 (' + tab_cnt[0] + '건)');
+				$('.tab_cnt').eq(2).text('업로드 불가 (' + tab_cnt[1] + '건)');
+			}
+
+			function pageselectCallback(page_index, jq) {
+
+				$.ajax({
+					type : "POST",
+					url : "/dealer/order_list/get_ship",
+					data : "offset=" + page_index,
+					dataType : 'json',
+					success : function(response) {
+						tmp = (response);
+						data = tmp.data;
+						var idx = 1;
+						var html = '<table>';
+						html += '<tr>';
+						html += '<td>순번</td>';
+						html += '<td>주문번호</td>';
+						html += '<td>송장번호</td>';
+						html += '<td>배송시각</td>';
+						html += '<td>딜명</td>';
+						html += '<td>받는사람</td>';
+						html += '<td>주소</td>';
+						html += '<td>-</td>';
+						html += '</tr>';
+						$.each(data, function() {
+							html += '<tr>';
+							html += '<td>' + idx + '</td>';
+							$.each(this, function(key, _this) {
+								if (_this == null) {
+									_this = '';
+								}
+								if (key == 'invoice_no') {
+									var dtd_select_obj = document.getElementById("dtd_select");
+									company = dtd_select_obj.options[dtd_select_obj.selectedIndex].value;
+									if (company) {
+										html += '<td><div class="invoice_no" id="' + _this + '"><input type=button value="[' + company + '] ' + _this + '"></div></td>';
+									} else {
+										html += '<td><div class="invoice_no" id="' + _this + '">' + _this + '</div></td>';
+									}
+								} else if (key == 'order_check') {
+									if (_this == 0) {
+										html += '<td><font color=red>주문번호 매칭안됨</font></td>';
+									} else {
+										html += '<td><font color=blue>정상</font></td>';
+									}
+								} else {
+									html += '<td>' + _this + '</td>';
+								}
+							});
+							idx++;
+							html += '</tr>';
+						});
+						html += '</table>';
+						$('.results').empty().append(html);
+						$('div.step').css("display", "block");
+					}
+				});
+				return false;
+			}
+
+			function getOptions() {
+				var opt = {
+					callback : pageselectCallback
+				};
+				// Collect options from the text fields - the fields are named like their option counterparts
+				opt["items_per_page"] = 20;
+				opt["num_display_entries"] = 5;
+				opt["num_edge_entries"] = 2;
+				opt["prev_text"] = "이전";
+				opt["next_text"] = "이후";
+
+				// Avoid html injections in this demo
+				var htmlspecialchars = {
+					"&" : "&amp;",
+					"<" : "&lt;",
+					">" : "&gt;",
+					'"' : "&quot;"
+				}
+				$.each(htmlspecialchars, function(k, v) {
+					opt.prev_text = opt.prev_text.replace(k, v);
+					opt.next_text = opt.next_text.replace(k, v);
+				})
+				return opt;
+			}
+
+			var submit_ing_flag = false;
+			function set_invoice_no() {
+				if (submit_ing_flag) {
+					alert('송장번호를 입력중입니다. 잠시만 기다려 주세요...');
+					return;
+				} else if ($('.v_green').length < 1) {
+					alert('저장할 데이터가 없습니다.');
+					return;
+				} else if (company == '' || company == null) {
+					alert('택배사를 고르세요.');
+					return;
+				}
+				var error_cnt = $("td[name='order_id_error']").length;
+				var error_cnt_invoice = $("td[name='invoice_error']").length;
+				var error_cnt_status = $("td[name='order_status_error[]']").length;
+				var error_deliver = $("td[name='deliver_error']").length;
+				var error_total = error_cnt + error_cnt_invoice + error_cnt_status + error_deliver;
+				var confirm_msg = "해당 주문에 " + company + "의 송장 번호를 입력하겠습니까?\n\n송장번호 등록 후에는 발송이 지연되지 않도록\n즉시 출고해 주시기 바랍니다.\n(발송지연시 패널티 적용)";
+
+				var confirm_detail_msg = "";
+				var status_check = 0;
+				var i = 0;
+				var temp_status = new Array();
+				var status_cnt = new Array();
+				$('td[name=order_status_error[]]').each(function() {
+					var $this = $(this);
+					status_check = false;
+
+					if ( typeof (temp_status[0]) == 'undefined') {
+						temp_status[i] = $this.text();
+						i++;
+					}
+
+					for (var cnt = 0; cnt < i; cnt++) {
+						if (temp_status[cnt] == $this.text()) {
+							status_check = true;
+						}
+					}
+					if (status_check == false) {
+						temp_status[i] = $this.text();
+						i++;
+					}
+				});
+
+				for (var i = 0; i < temp_status.length; i++) {
+					status_cnt[i] = 0;
+					$('td[name=order_status_error[]]').each(function() {
+						if ($(this).text() == temp_status[i]) {
+							status_cnt[i] += 1;
+						}
+					});
+				}
+				var error_deliver_txt = '';
+				if (error_deliver > 0) {
+					$("td[name='deliver_error']").each(function() {
+						error_deliver_txt += $(this).parent().find('.order_id:first').text() + '||';
+					});
+				}
+				if (error_cnt > 0 || error_cnt_status > 0 || error_deliver > 0) {
+					confirm_msg = "주문번호가 매칭되지 않은 정보가 " + error_total + "건 있습니다. \n그래도 진행하시겠습니까?";
+				} else if (error_cnt_invoice > 0) {
+					confirm_msg = "송장번호에 한글 및 특수문자(“-”제외)가 포함되어 있어 송장번호 입력이 불가합니다. \n그래도 진행하시겠습니까?";
+				}
+
+				if (confirm(confirm_msg)) {
+					if (error_total > 0) {
+						error_cnt_invoice += error_deliver;
+						if (error_cnt > 0) {
+							confirm_detail_msg += "주문번호 오류 " + error_cnt + "건\n";
+						}
+						if (error_cnt_invoice > 0) {
+							confirm_detail_msg += "송장번호 오류 " + error_cnt_invoice + "건\n";
+						}
+						if (error_cnt_status > 0) {
+							for (var i = 0; i < temp_status.length; i++) {
+								confirm_detail_msg += temp_status[i] + " " + status_cnt[i] + "건\n";
+							}
+						}
+						confirm_detail_msg += "오류건은 업로드되지 않습니다.\n구매자 리스트 확인 후 재업로드 하세요.";
+						if (!confirm(confirm_detail_msg)) {
+							return false;
+						}
+					}
+					submit_ing_flag = true;
+					$.ajax({
+						type : "POST",
+						url : "/dealer/order_list/set_ship",
+						data : "company=" + company + "&paramstr=" + parmeter_str + "&error_deliver_txt=" + error_deliver_txt,
+						dataType : 'json',
+						success : function(response) {
+							if (response == "success") {
+								opener.$('#ship_status').val(1);
+								opener.$('#use_coupon').submit();
+								alert("입력이 완료되었습니다. 페이지를 닫습니다.");
+								submit_ing_flag = false;
+								window.close();
+							} else {
+								alert("입력이 실패하였습니다. 다시 시도해 주십시오.");
+								submit_ing_flag = false;
+							}
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							alert("처리중 오류가 발생하였습니다.\n다시 시도해 주십시오.");
+							submit_ing_flag = false;
+						}
+					});
+				}
+			}
+
+			var parameter_str = '';
+			$(document).ready(function() {
+				$('.invoice_no  input').live('click', function() {
+
+					doorToDoorSearch(replaceAll($(this).parent().attr("id"), "-", ""));
+
+					return false;
+				});
+				// 업로드 셀렉터 및 함수 지정, option으로 받기 때문에, 사용자 지정 함수를 선언할 수 있다.
+				// 내부적으로 _settings에 지정된다. 사용자 지정 함수는 구현해야 한다.
+				var button = $('#button1'), interval;
+
+				new AjaxUpload(button, {
+					action : '/dealer/order_list/do_ship_upload/303370', // <- 업로드 웹애플리케이션
+					name : 'myfile', //<- 파일 업로드 이름
+					dataType : 'json',
+					onSubmit : function(file, ext) {
+						// 버튼의 텍스트를 변경한다.
+						button.text('업로드중');
+						this.disable();
+						// <- 한 파일만 업로드 할 경우, 업로드 버튼, disable
+
+						// 업로드 진행 텍스트 변경 함수
+						interval = window.setInterval(function() {
+							var text = button.text();
+							if (text.length < 13) {
+								button.text(text + '.');
+							} else {
+								button.text('업로드중');
+							}
+						}, 200);
+					},
+
+					onComplete : function(file, response) {
+						//button.text('Upload');
+						window.clearInterval(interval);
+						this.enable();
+						// <- 업로드 버튼, enable
+						tmp = json_decode(response);
+						if (tmp == null)
+							return;
+
+						window.resizeTo(600, 565);
+						data = tmp.data;
+						var tab_cnt = new Array(0, 0, 0);
+						var idx = 1;
+						var html = '<div class="result_list">';
+						html += '<div class="result_list_in">';
+						html += '<table id="ship_result" border="0" cellspacing="0" cellpadding="0">';
+						html += '<tr>';
+						html += '<th scope="col">순번</th>';
+						html += '<th scope="col">주문번호</th>';
+						html += '<th scope="col">선물주문번호</th>';
+						html += '<th scope="col">송장번호</th>';
+						html += '<th class="deal_name" scope="col">딜명</th>';
+						html += '<th scope="col">받는사람</th>';
+						html += '<th class="addr" scope="col">주소</th>';
+						html += '<th scope="col">상태</th>';
+						html += '</tr>';
+						parmeter_str = '';
+						$.each(data, function() {
+							$.each(this, function(key, obj) {
+								html += '<tr>';
+								html += '<td>' + idx + '</td>';
+
+								html += '<td class = "order_id">' + this['order_id'] + '</td>';
+
+								html += '<td class = "order_id">' + this['giftship_id'] + '</td>';
+								html += '<td class = "invoice_no" id = "' + this['invoice_no'] + '">' + this['invoice_no'] + '</td>';
+								html += '<td class = "deal_name">' + this['deal_name'] + '</td>';
+								html += '<td class = "receive">' + this['receive_name'] + '</td>';
+								html += '<td class = "addr">' + this['addr'] + '</td>';
+								if (this['order_check'] == "0") {
+									html += '<td class="v_red invoice_status" name="order_id_error">주문번호 오류</font></td>';
+								} else if (this['order_check'] == "2") {
+									html += '<td class="v_red invoice_status" name="invoice_error">송장번호 오류</font></td>';
+								} else if (obj['order_check'] == "3") {
+									html += '<td class="v_red invoice_status" name="order_status_error[]">' + obj['order_status'] + ' 오류</font></td>';
+								} else {
+									html += '<td class="v_green invoice_status">주문번호 정상</font></td>';
+									parmeter_str += this['order_id'] + ',' + this['giftship_id'] + ',' + this['invoice_no'] + ',' + this['m_id'] + ',' + key + ',303370||';
+									tab_cnt[1] += 1;
+								}
+
+								/*
+								 $.each(this, function(key,_this) {
+								 if(_this == null) {
+								 _this = '';
+								 }
+								 if(key == 'invoice_no') {
+								 html += '<td><div class="invoice_no" id="'+_this+'">'+_this+'</div></td>';
+								 //html += '<td><div class="invoice_no">'+_this+'</div></td>';
+								 } else if(key == 'order_check') {
+								 if(_this == 0) {
+								 html += '<td class="v_red invoice_status">매칭안됨</font></td>';
+								 } else {
+								 html += '<td class="v_green invoice_status">정상</font></td>';
+								 }
+								 } else {
+								 html += '<td class='+key+'>'+_this+'</td>';
+								 }
+								 //alert(key);
+								 });*/
+								idx++;
+								html += '</tr>';
+							});
+						});
+						html += '</table>';
+						html += '</div>';
+						html += '</div>';
+						parmeter_str = parmeter_str.substr(0, parmeter_str.length - 2);
+						$('.results').empty().append(html);
+						$('div.step').css("display", "block");
+						var optInit = getOptions();
+
+						tab_cnt[0] = idx - 1;
+						tab_cnt[2] = tab_cnt[0] - tab_cnt[1];
+						$('.tab_cnt').eq(0).attr('tab_total', tab_cnt[0]);
+						$('.tab_cnt').eq(0).text('전체 (' + tab_cnt[0] + '건)');
+						$('.tab_cnt').eq(1).text('업로드 가능 (' + tab_cnt[1] + '건)');
+						$('.tab_cnt').eq(2).text('업로드 불가 (' + tab_cnt[2] + '건)');
+						//$("#Pagination").pagination(tmp.count, optInit);
+					}
+				});
+			});
+			function json_decode(sStr) {
+				try {
+					return (new Function('', 'return ' + sStr + ';'))();
+				} catch (e) {
+					alert('송장 엑셀 파일의 형식이 맞지 않거나 잘못된 파일입니다.');
+					return null;
+				}
+			}
+
+			function change_tab(how_to) {
+				for (var i = 0; i < 3; i++) {
+					$(".tab_vicinity li").eq(i).removeClass("on");
+				}
+				switch(how_to) {
+					case 0 :
+						//전체
+						$(".v_green").parent().css("display", "");
+						$(".v_red").parent().css("display", "");
+						$(".tab_vicinity li").eq(how_to).addClass("on");
+						break;
+					case 1 :
+						//업로드 가능
+						$(".v_green").parent().css("display", "");
+						$(".v_red").parent().css("display", "none");
+						$(".tab_vicinity li").eq(how_to).addClass("on");
+						break;
+					case 2 :
+						//업로드 불가
+						$(".v_green").parent().css("display", "none");
+						$(".v_red").parent().css("display", "");
+						$(".tab_vicinity li").eq(how_to).addClass("on");
+						break;
+				}
+			}
+		</script>
+		<style>
+			.tab_vicinity {
+				height: 30px;
+				padding: 0;
+				border-bottom: 1px solid #ccc;
+				margin-top: 20px;
+			}
+			.tab_vicinity li {
+				padding: 0 10px;
+				overflow: hidden;
+				text-align: center;
+				float: left;
+				position: relative;
+				z-index: 10;
+				border: 1px solid #ccc;
+				line-height: 28px;
+				font-weight: bold;
+				font-size: 12px;
+				background-color: #dfdfdf;
+				bottom: -1px;
+				margin-right: 2px;
+			}
+			.tab_vicinity li:hover, .tab_vicinity li.on {
+				background-color: #dc2626;
+			}
+			.tab_vicinity li:hover a, .tab_vicinity li.on a {
+				color: #fff;
+				text-decoration: none;
+			}
+			.pop_inner {
+				width: 100%;
+				display: inline-block;
+				border: 1px solid #dbdbdb;
+				margin: 20px 0 15px 0;
+				line-height: 20px;
+			}
+			.pop_inner h2 {
+				color: #ff140a;
+				display: inline-block;
+				width: 100%;
+				font-weight: bold;
+				margin-top: 10px;
+			}
+			.pop_inner .pop_bx {
+				padding: 20px;
+			}
+			.pop_inner dl {
+				color: #ff140a;
+			}
+			.pop_inner dt {
+				float: left;
+				width: 12px;
+				height: 20px;
+				background: url('http://image.wemakeprice.com/images/dealer/icon_dot_popup.png') 5px 7px no-repeat;
+				vertical-align: top;
+			}
+			.pop_inner dd {
+				width: 97%;
+				display: inline-block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="pop_cnt">
+				<h1>송장번호 일괄 업로드</h1>
+				
+				<div class="box_gray">
+					<p class="box_gray_p mb20">
+						다운로드 받으신 상품출고 리스트 엑셀파일의 운송장 번호 입력란에 각 주문번호에 맞게 운송장번호를 입력한 후
+						업로드 합니다.(* 한 번에 1,000개까지만 일괄 입력됩니다.)
+					</p>
+					<dl class="v_red">
+						<dt>※ 주의</dt>
+						<dd>
+							송장번호가 등록되면 고객(구매자)님께 출고 문자가 발송되어, 고객님은 1~2일내 수령을 예상합니다.
+						</dd>
+						<dd>
+							등록된 송장번호로 익일까지 배송조회가 되지 않으면 가송장 번호로 판단되어 패널티가 적용될 수 있습니다.
+						</dd>
+					</dl>
+				</div>
+				<div class="btn_area">
+					<button type="button" value="upload" id="button1" class="btn_wht_big">
+						업로드
+					</button>
+					
+					<button type="button" class="btn_gray_big" onclick="window.close();">
+						닫기
+					</button>
+				</div>	
+
+				<div class="step" style="display:none;">
+					<ul class="tab_vicinity">
+						<li class="on" onclick="change_tab(0)">
+							<a href="#" class="tab_cnt">전체</a>
+						</li>
+						<li onclick="change_tab(1)">
+							<a href="#" class="tab_cnt">업로드 가능</a>
+						</li>
+						<li onclick="change_tab(2)">
+							<a href="#" class="tab_cnt">업로드 불가</a>
+						</li>
+					</ul>
+					<div class="results"></div>
+					<div id="Pagination" class="pagination"></div>
+				</div>
+
+				<div class="step" style="display:none">
+					<div class="result_list">
+						<div class="result_cmt">
+							<p>
+								택배사를 고르시고 송장번호를 눌러 테스트 하세요.
+							</p>
+							<label for="dtd_select"><strong>* 택배사 지정</strong></label>
+							<select id="dtd_select" name="dtd_select" onchange="set_link(this);">
+								<option value=''>택배사를 고르세요.</option>
+							</select>
+							<script type="text/javascript">
+								var html = '';
+								for (a in dtd_companys) {
+									html += '<option value="' + a + '">' + a + '</option>';
+								}
+								$("#dtd_select").append(html);
+							</script>
+						</div>
+					</div>
+					<button type="button" value="송장입력하기" onclick="set_invoice_no()" class="btn btn_save_ship_num">
+						송장입력하기
+					</button>
+				</div>
+		</div>
+
+	</body>
+</html>

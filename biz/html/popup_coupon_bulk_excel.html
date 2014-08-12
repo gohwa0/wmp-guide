@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>티켓 일괄(대량) 처리</title>
+		
+		<link href="../css/dealer.css" rel="stylesheet" type="text/css" />
+		<!--
+		<link href="/css/new/dealer/dealer.css" type="text/css" rel="stylesheet" />
+		-->
+		
+		<script type="text/javascript" src="/js/_jquery/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" language="javascript">
+			function ticket_up_chk() {
+				if (document.ticket_batch_up_form.excelFile.value != "") {
+					$("#upload_btn").hide();
+					$("#prigressbar").show();
+					var excelfilevalue = document.ticket_batch_up_form.excelFile.value;
+					var excelfilevalue_ext = excelfilevalue.split('.');
+					if (excelfilevalue_ext[1] == "xls" || excelfilevalue_ext[1] == "xlsx" || excelfilevalue_ext[1] == "cvs") {
+						document.ticket_batch_up_form.submit();
+					} else {
+						alert('티켓일괄처리 (쿠폰값)파일을 입력하세요. xls, xlsx, csv 형식만 지원합니다.');
+						$("#upload_btn").show();
+						$("#prigressbar").hide();
+						return false;
+					}
+				} else {
+					alert('티켓일괄처리 (쿠폰값)파일을 입력하세요. xls, xlsx, csv 형식만 지원합니다.');
+					$("#upload_btn").show();
+					$("#prigressbar").hide();
+					return false;
+				}
+			}
+		</script>
+	</head>
+	
+	<body>
+		<div class="pop_cnt pop_cnt_foot">
+			<h1>티켓 일괄(대량) 처리</h1>
+			<form name="ticket_batch_up_form" action='coupon_bulk_excel_upload' method="post" enctype="multipart/form-data" onsubmit="return ticket_up_chk(this);">
+				<input type="hidden" name="t_mode" value="new" />
+				<fieldset>
+					<legend class="hidden">
+						티켓일괄처리 템플릿 업로드 폼
+					</legend>
+					<div class="box_gray">
+						<p class="box_gray_p">
+							템플릿 파일을 다운로드 받으시고
+							<br />
+							올바른 쿠폰값을 입력하신 후 업로드 하여 주세요.
+						</p>
+						<input type="file" id="excelFile" name="excelFile" class="inp_file" />
+						<em class="pop_txt_info">파일은 xls, xlsx, csv 형식만 지원합니다.</em>
+					</div>
+					<div class="btn_area">
+						<button type="submit" id="upload_btn" value="upload" class="btn_wht_big">
+							업로드
+						</button>
+						<button type="button" class="btn_gray_big" onclick="window.close();">
+							닫기
+						</button>
+					</div>
+					<div id="prigressbar" align="center" style="display:none;">
+						<img src="http://image.wemakeprice.com/images/partner/progress_bar.gif" alt="잠시만 기다려 주세요"/>
+						<br />
+						<strong>
+							티켓 처리중 입니다. 잠시만 기다려 주세요.
+							<br />
+							완료메시지가 나올때까지 꼭 기다려주세요.
+						</strong>
+					</div>
+				</fieldset>
+			</form>
+
+			<div class="pop_foot">
+				<span class="align_left">
+				티켓 일괄(대량)처리 <strong>템플릿 다운받기</strong>
+				</span>
+				<div class="btn_area_down">
+					<a href="http://image.wemakeprice.com/pds/dealer/we_make_price_coupon_bulk_process_2003_v2.xls" class="btn_icon_file">xls</a> 
+					<a href="/dealer/coupon_list/bulk_excel_2010_download" class="btn_icon_file">xlsx</a>
+					<a href="http://image.wemakeprice.com/pds/dealer/we_make_price_coupon_bulk_process_csv_v2.csv" class="btn_icon_file">CSV</a>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>		
+<!--원본 	
+	<body class="popup_win">
+
+		<div class="pop_wrap">
+			<div class="pop_in">
+				<h1 class="ir h_process">티켓 일괄 처리</h1>
+				<form name="ticket_batch_up_form" action='coupon_bulk_excel_upload' method="post" enctype="multipart/form-data" onsubmit="return ticket_up_chk(this);">
+					<input type="hidden" name="t_mode" value="new" />
+					<fieldset>
+						<legend class="hidden">
+							티켓일괄처리 템플릿 업로드 폼
+						</legend>
+						<div class="pop_cnt">
+							<p>
+								템플릿 파일을 다운로드 받으시고
+								<br />
+								올바른 쿠폰값을 입력하신 후 업로드 하여 주세요.
+							</p>
+							<input type="file" id="excelFile" name="excelFile" class="in_txt" />
+							(* xls, xlsx, csv 형식만 지원합니다.)
+						</div>
+
+						<button type="submit" id="upload_btn" value="upload" class="btn btn_upload">
+							업로드
+						</button>
+						<div id="prigressbar" align="center" style="display:none;">
+							<img src="http://image.wemakeprice.com/images/partner/progress_bar.gif" />
+							<br />
+							<strong>티켓 처리중 입니다. 잠시만 기다려 주세요.
+							<br>
+							완료메시지가 나올때까지 꼭 기다려주세요.</strong>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+			<div class="pop_foot">
+				(* 티켓 일괄(대량)처리 <strong>템플릿 다운받기</strong>
+				<a href="http://image.wemakeprice.com/pds/dealer/we_make_price_coupon_bulk_process_2003_v2.xls" class="btn btn_dn_xls">xls</a>, <a href="/dealer/coupon_list/bulk_excel_2010_download" class="btn btn_dn_xlsx">xlsx</a>, <a href="http://image.wemakeprice.com/pds/dealer/we_make_price_coupon_bulk_process_csv_v2.csv" class="btn btn_dn_csv">CSV</a> )
+			</div>
+			<button type="button" class="ir btn_pop_close" onclick="window.close();">
+				닫기
+			</button>
+		</div>
+
+	</body>
+-->	

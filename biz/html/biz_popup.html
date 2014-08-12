@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<title>위메프 파트너 팝업창 가이드 모음</title>
+		<link href="../css/dealer.css" rel="stylesheet" type="text/css" />
+	</head>
+
+	<body>
+		<div class="pop_cnt pop_cnt_foot">
+			<h1>큰 타이틀</h1>
+			
+			<div>
+				<h2>작은 타이틀 - 흰 배경의 팝업창 내용</h2>
+				<br />
+				<p><span class="v_red">레드 폰트는 class가 .v_red</span>, <span class="v_green">그린 폰트는 class가 .v_green</span></p>
+				<p class="mb20">하단 마진 간격 20은 class가 .mb20</p>
+				<p class="mb50">하단 마진 간격 50은 class가 .mb50</p>
+				<br />
+				<div class="mb20">
+					<label for="w_excelFile">파일 첨부시 </label>
+					<input type="file" id="w_excelFile" name="excelFile" class="inp_file" />
+				</div>
+				<div class="mb20">
+					<label for="w_refund_type">select</label>
+					<select name="refund_type" id="w_refund_type">
+						<option value="">선택</option>
+						<option value="반품배송비 미동봉">반품배송비 미동봉</option>
+						<option value="반품배송 불가">반품배송 불가</option>
+						<option value="환불문의">환불문의</option>
+						<option value="교환문의">교환문의</option>
+						<option value="위메프문의">위메프문의</option>
+						<option value="상품관련문의">상품관련문의</option>
+						<option value="기타">기타</option>
+					</select>
+				</div>
+				
+				<div class="mb20">
+					<label for="w_inp_txt">input text</label>
+					<input type="text" name="inp_txt" id="w_inp_txt" value="test" maxlength="80" />
+				</div>
+				
+				<div class="mb20">
+					<label for="w_ask_text">textarea</label>
+					<textarea name="ask_text" id="w_ask_text" cols="30" rows="5">test</textarea>
+				</div>
+				
+				<div class="mb20">
+					<label for="w_radio_chk1">radio1</label>
+					<input type="radio" name="radio_chk" id="w_radio_chk1" />
+					
+					<label for="w_radio_chk2">radio2</label>
+					<input type="radio" name="radio_chk" id="w_radio_chk2" />
+				</div>
+				
+				<div class="mb20">
+					<label for="w_checkbox_chk1">checkbox1</label>
+					<input type="checkbox" name="checkbox_chk" id="w_checkbox_chk1" />
+					
+					<label for="w_checkbox_chk2">checkbox2</label>
+					<input type="checkbox" name="checkbox_chk" id="w_checkbox_chk2" />
+				</div>
+				<p class="pop_txt_info">
+					작은 글씨의 설명글
+				</p>
+				<br />
+				<table cellpadding="0" cellspacing="0">
+					<colgroup>
+						<col width="50px" />
+						<col width="" />
+						<col width="146px" />
+						<col width="146px" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th scope="col">No.</th>
+							<th scope="col">메모</th>
+							<th scope="col">등록일시</th>
+							<th scope="col">수정/삭제</th>
+						</tr>
+
+						<tr>
+							<td>99999</td>
+							<td class="align_left">메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다.</td>
+							<td class="f12">2014-07-21 14:10</td>
+							<td>
+								button으로 된 버튼 <br />
+								<button type="button" class="btn_tbl_red">수정</button>
+								<button type="button" class="btn_tbl_blue">삭제</button>
+							</td>
+						</tr>
+						<tr>
+							<td>12</td>
+							<td class="align_left">메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다.</td>
+							<td class="f12">2014-07-21 14:09</td>
+							<td>
+								a로 된 버튼 <br />
+								<a href="#" class="btn_tbl_red">수정</a>
+								<a href="#" class="btn_tbl_blue">삭제</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<br />
+				<table cellpadding="0" cellspacing="0" class="pop_table_line">
+					<colgroup>
+						<col width="50px" />
+						<col width="" />
+						<col width="146px" />
+						<col width="146px" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th scope="col">No.</th>
+							<th scope="col">메모</th>
+							<th scope="col">등록일시</th>
+							<th scope="col">수정/삭제</th>
+						</tr>
+
+						<tr>
+							<td>99999</td>
+							<td class="align_left">메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다.</td>
+							<td class="f12">2014-07-21 14:10</td>
+							<td>
+								button으로 된 버튼 <br />
+								<button type="button" class="btn_tbl_red">수정</button>
+								<button type="button" class="btn_tbl_blue">삭제</button>
+							</td>
+						</tr>
+						<tr>
+							<td>12</td>
+							<td class="align_left">메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다.</td>
+							<td class="f12">2014-07-21 14:09</td>
+							<td>
+								a로 된 버튼 <br />
+								<a href="#" class="btn_tbl_red">수정</a>
+								<a href="#" class="btn_tbl_blue">삭제</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<br />
+				<table class="pop_table_v2">
+					<tbody>
+						<tr><th scope="col">coupon_code</th><td><span>message</span></td><td><span>message</span></td></tr>
+						<tr><th scope="col">coupon_code</th><td><span class="v_green">message</span></td><td><span class="v_green">message</span></td></tr>
+						<tr><th scope="col">coupon_code</th><td><span class="v_red">message</span></td><td><span class="v_red">message</span></td></tr>
+					</tbody>
+				</table>
+				<br />
+				<table class="pop_table_v2 pop_table_line">
+					<tbody>
+						<tr><th scope="col">coupon_code</th><td><span>message</span></td><td><span>message</span></td></tr>
+						<tr><th scope="col">coupon_code</th><td><span class="v_green">message</span></td><td><span class="v_green">message</span></td></tr>
+						<tr><th scope="col">coupon_code</th><td><span class="v_red">message</span></td><td><span class="v_red">message</span></td></tr>
+					</tbody>
+				</table>
+				<br />
+				<dl class="info_list">
+					<dt>
+						dl의 타이틀1
+					</dt>
+					<dd>
+						dl의 내용1 <em>기존 개발 중 중요 내용은 em</em>
+					</dd>
+					
+					<dt>
+						dl의 타이틀2
+					</dt>
+					<dd>
+						dl의 내용2 <em>기존 개발 중 중요 내용은 em</em>
+					</dd>
+				</dl>
+			</div>
+			
+			<div>
+				<h2>작은 타이틀 - 박스 안 팝업창 내용</h2>
+				<div class="box_gray">
+					박스안 텍스트
+					<em>기존 개발 중 중요 내용은 em</em>
+					<p class="box_gray_p">박스안에서 p태그 사용 시 box_gray_p라는 class 사용함.</p>
+					
+					<br />
+					<div class="mb20">
+						<label for="excelFile">파일 첨부시 </label>
+						<input type="file" id="excelFile" name="excelFile" class="inp_file" />
+					</div>
+					
+					<div class="mb20">
+						<label for="refund_type">select</label>
+						<select name="refund_type" id="refund_type">
+							<option value="">선택</option>
+							<option value="반품배송비 미동봉">반품배송비 미동봉</option>
+							<option value="반품배송 불가">반품배송 불가</option>
+							<option value="환불문의">환불문의</option>
+							<option value="교환문의">교환문의</option>
+							<option value="위메프문의">위메프문의</option>
+							<option value="상품관련문의">상품관련문의</option>
+							<option value="기타">기타</option>
+						</select>
+					</div>
+					
+					<div class="mb20">
+						<label for="inp_txt">input text</label>
+						<input type="text" name="inp_txt" id="inp_txt" value="test" maxlength="80" />
+					</div>
+					
+					<div class="mb20">
+						<label for="ask_text">textarea</label>
+						<textarea name="ask_text" id="ask_text" cols="30" rows="5">test</textarea>
+					</div>
+					
+					<div class="mb20">
+						<label for="radio_chk1">radio1</label>
+						<input type="radio" name="radio_chk" id="radio_chk1" />
+						
+						<label for="radio_chk2">radio2</label>
+						<input type="radio" name="radio_chk" id="radio_chk2" />
+					</div>
+					
+					<div class="mb20">
+						<label for="checkbox_chk1">checkbox1</label>
+						<input type="checkbox" name="checkbox_chk" id="checkbox_chk1" />
+						
+						<label for="checkbox_chk2">checkbox2</label>
+						<input type="checkbox" name="checkbox_chk" id="checkbox_chk2" />
+					</div>
+		
+					<table cellpadding="0" cellspacing="0">
+						<colgroup>
+							<col width="50px" />
+							<col width="" />
+							<col width="146px" />
+							<col width="146px" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="col">No.</th>
+								<th scope="col">메모</th>
+								<th scope="col">등록일시</th>
+								<th scope="col">수정/삭제</th>
+							</tr>
+	
+							<tr>
+								<td>99999</td>
+								<td class="align_left">메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다.</td>
+								<td class="f12">2014-07-21 14:10</td>
+								<td>
+									button으로 된 버튼 <br />
+									<button type="button" class="btn_tbl_red">수정</button>
+									<button type="button" class="btn_tbl_blue">삭제</button>
+								</td>
+							</tr>
+							<tr>
+								<td>12</td>
+								<td class="align_left">메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다.</td>
+								<td class="f12">2014-07-21 14:09</td>
+								<td>
+									a로 된 버튼 <br />
+									<a href="#" class="btn_tbl_red">수정</a>
+									<a href="#" class="btn_tbl_blue">삭제</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br />
+					<table cellpadding="0" cellspacing="0" class="pop_table_line">
+						<colgroup>
+							<col width="50px" />
+							<col width="" />
+							<col width="146px" />
+							<col width="146px" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="col">No.</th>
+								<th scope="col">메모</th>
+								<th scope="col">등록일시</th>
+								<th scope="col">수정/삭제</th>
+							</tr>
+	
+							<tr>
+								<td>99999</td>
+								<td class="align_left">메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다.</td>
+								<td class="f12">2014-07-21 14:10</td>
+								<td>
+									button으로 된 버튼 <br />
+									<button type="button" class="btn_tbl_red">수정</button>
+									<button type="button" class="btn_tbl_blue">삭제</button>
+								</td>
+							</tr>
+							<tr>
+								<td>12</td>
+								<td class="align_left">메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다. 메모입니다.</td>
+								<td class="f12">2014-07-21 14:09</td>
+								<td>
+									a로 된 버튼 <br />
+									<a href="#" class="btn_tbl_red">수정</a>
+									<a href="#" class="btn_tbl_blue">삭제</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br />
+					<div class="result_list_in">
+						<table class="pop_table_v2">
+							<tbody>
+								<tr><th scope="col">coupon_code</th><td><span>message</span></td></tr>
+								<tr><th scope="col">coupon_code</th><td><span class="v_green">message</span></td></tr>
+								<tr><th scope="col">coupon_code</th><td><span class="v_red">message</span></td></tr>
+							</tbody>
+						</table>
+					</div>
+					<br />
+					<table class="pop_table_v2">
+						<tbody>
+							<tr><th scope="col">coupon_code</th><td><span>message</span></td><td><span>message</span></td></tr>
+							<tr><th scope="col">coupon_code</th><td><span class="v_green">message</span></td><td><span class="v_green">message</span></td></tr>
+							<tr><th scope="col">coupon_code</th><td><span class="v_red">message</span></td><td><span class="v_red">message</span></td></tr>
+						</tbody>
+					</table>
+					<br />
+					<table class="pop_table_v2 pop_table_line">
+						<tbody>
+							<tr><th scope="col">coupon_code</th><td><span>message</span></td><td><span>message</span></td></tr>
+							<tr><th scope="col">coupon_code</th><td><span class="v_green">message</span></td><td><span class="v_green">message</span></td></tr>
+							<tr><th scope="col">coupon_code</th><td><span class="v_red">message</span></td><td><span class="v_red">message</span></td></tr>
+						</tbody>
+					</table>
+					
+				</div>
+			</div>
+			
+			<div class="btn_area">
+				<button type="submit" id="upload_btn" value="upload" class="btn_wht_big">
+					업로드
+				</button>
+				<button type="button" class="btn_gray_big" onclick="window.close();">
+					닫기
+				</button>
+			</div>
+			
+			<div class="pop_foot">
+				<span class="align_left">
+				팝업창 하단
+				</span>
+				<div class="btn_area_down">
+					<a href="#" class="btn_icon_file">a버튼</a>
+					<a href="#" class="btn_icon_file">a버튼</a> 
+					<button type="button" class="btn_icon_file">button버튼</button>
+					<button type="button" class="btn_icon_file">button버튼</button>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>

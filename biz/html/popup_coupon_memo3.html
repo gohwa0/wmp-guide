@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link href="../css/dealer.css" rel="stylesheet" type="text/css" />
+		<title>위메프</title>
+	</head>
+<!-- 디자인 개편 수정-->	
+	<body>
+<!-- //디자인 개편 수정-->	
+		<script type="text/javascript">
+			function memo_form_chk() {
+				var frm = document.coupon_memo;
+				if (document.coupon_memo.mode.value == "delete") {
+					document.coupon_memo.mode.value = "write";
+				}
+				if (frm.coupon_memo_value.value == "") {
+					alert("내용을 입력 해주세요.");
+					frm.coupon_memo_value.focus();
+					return false;
+				} else {
+					//frm.submit();
+				}
+			}
+
+			function memo_form_modify_move(no) {
+				var frm = document.coupon_memo;
+				document.coupon_memo.no.value = no;
+				var coupon_id = document.coupon_memo.coupon_id.value;
+				frm.action = "/dealer/coupon_list/coupon_memo/" + coupon_id;
+				frm.submit();
+			}
+
+			function memo_form_delete(no, view_no) {
+				var frm = document.coupon_memo;
+				document.coupon_memo.no.value = no;
+				document.coupon_memo.mode.value = "delete";
+				var coupon_id = document.coupon_memo.coupon_id.value;
+				if (confirm(view_no + "번 글을 삭제 하시겠습니까? ")) {
+					frm.submit();
+				} else {
+					return;
+				}
+			}
+
+			function write_link() {
+				location.href = "/dealer/coupon_list/coupon_memo/" + 161488221;
+			}
+
+		</script>
+		
+		<!-- 디자인 개편 수정-->
+		<div id="pop_wrap" class="pop_cnt">
+		<!-- //디자인 개편 수정-->	
+			<form method="post" name="coupon_memo" id="coupon_memo" action="/dealer/coupon_list/coupon_memo_write_update_delete" onsubmit="return memo_form_chk(this);">
+				<h1>메모</h1>
+				<!--<textarea rows="3" style="width:580px; padding:8px; font-size:16px"></textarea>-->
+				<input type="text" name="coupon_memo_value" value="" maxlength="80">
+				<input type="hidden" name="coupon_id" value="161488221">
+				<input type="hidden" name="no" value="">
+				<input type="hidden" name="mode" value="write">
+				
+				<!-- 디자인 개편 수정-->
+				<p class="pop_txt_info">공백포함 한글 60자까지 입력 가능합니다.</p>
+				<!-- //디자인 개편 수정-->
+				<p class="btn_area mb50">
+					<input type="submit" class="btn_wht_big" value="등록">
+				</p>
+			</form>
+			<table cellpadding="0" cellspacing="0" class="basic_table">
+				<colgroup>
+					<col width="50px" />
+					<col width="" />
+					<col width="146px" />
+					<col width="146px" />
+				</colgroup>
+				<tr>
+					<th scope="col">No.</th>
+					<th scope="col">메모</th>
+					<th scope="col">등록일시</th>
+					<th scope="col">수정/삭제</th>
+				</tr>
+
+				<tr>
+					<td>5</td>
+					<td class="align_left">fff</td>
+					<td class="f12">2014-07-15 11:02</td>
+					<td><a href="#" onclick="memo_form_modify_move('434231');">
+					<button type="button" class="btn_tbl_red">수정</button></a><a href="#" onclick="memo_form_delete('434231','5');">
+					<button type="button" class="btn_tbl_blue">삭제</button></a></td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td class="align_left">fff</td>
+					<td class="f12">2014-07-15 11:02</td>
+					<td><a href="#" onclick="memo_form_modify_move('434230');">
+					<button type="button" class="btn_tbl_red">수정</button></a><a href="#" onclick="memo_form_delete('434230','4');">
+					<button type="button" class="btn_tbl_blue">삭제</button></a></td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td class="align_left">ff</td>
+					<td class="f12">2014-07-15 11:02</td>
+					<td><a href="#" onclick="memo_form_modify_move('434229');">
+					<button type="button" class="btn_tbl_red">수정</button></a><a href="#" onclick="memo_form_delete('434229','3');">
+					<button type="button" class="btn_tbl_blue">삭제</button></a></td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td class="align_left">fgfgfg</td>
+					<td class="f12">2014-07-15 11:02</td>
+					<td><a href="#" onclick="memo_form_modify_move('434228');">
+					<button type="button" class="btn_tbl_red">수정</button></a><a href="#" onclick="memo_form_delete('434228','2');">
+					<button type="button" class="btn_tbl_blue">삭제</button></a></td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td class="align_left">aa</td>
+					<td class="f12">2014-07-15 11:00</td>
+					<td><a href="#" onclick="memo_form_modify_move('434223');">
+					<button type="button" class="btn_tbl_red">수정</button></a><a href="#" onclick="memo_form_delete('434223','1');">
+					<button type="button" class="btn_tbl_blue">삭제</button></a></td>
+				</tr>
+			</table>
+
+			<!--페이징-->
+			<div class="paging" id="basic_page"></div>
+			<!--//페이징-->
+			<p class="btn_area">
+				<button type="button" onclick="window.close();" class="btn_wht_big">
+					확인
+				</button>
+			</p>
+
+		</div>
+<!-- 디자인 개편 수정-->		
+	</body>
+</html>
+<!-- 디자인 개편 수정-->
+

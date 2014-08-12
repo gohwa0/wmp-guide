@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>위메프</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+
+<link media="screen" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" />
+
+<link rel="stylesheet" type="text/css" href="/css/admin/manager.css?20140701_1" />
+<script src="/js/_jquery/jquery-1.4.2.min.js?20140701_1" type="text/javascript"></script>
+<script src="/js/_jquery/jquery-ui.min.js?20140701_1" type="text/javascript"></script>
+
+<!-- common -->
+<script src="/js/_jquery/plugin/jquery.i18n.properties.js" type="text/javascript"></script>
+<script src="/js/_jquery/plugin/jquery.numberformatter-1.2.js" type="text/javascript"></script>
+<script src="/js/_jquery/plugin/jquery.clickable.js" type="text/javascript"></script>
+
+<!-- util -->
+<script src="/js/utils.js" type="text/javascript"></script>
+<script src="/js/common.js" type="text/javascript"></script>
+<script src="/js/default.js?20140701_1" type="text/javascript"></script>
+
+<script src="/js/admin/default.js?20140701_1" type="text/javascript"></script>
+<link href="../css/dealer.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<? 
+//		echo $order_id;
+?>
+<div id="return_popup" class="pop_cnt">
+	
+<form id="refund_ask" name="refund_ask"  method="post">
+	<input type="hidden" name="order_id" value="<?=$order_id;?>"/>
+	<input type="hidden" name="m_id" value="<?=$m_id;?>"/>
+	<input type="hidden" name="coupon_id" value="<?=$coupon_id;?>"/>
+	<input type="hidden" name="deal_id" value="<?=$deal_id;?>"/>
+	<input type="hidden" name="deal_name" value="<?=$deal_name;?>"/>
+	<input type="hidden" name="refund_ask_count" value="<?=$refund_ask_count;?>"/>
+	<input type="hidden" name="exchange_status" value="<?=$exchange_status;?>"/>
+	<input type="hidden" name="order_status" value="<?=$order_status;?>"/>
+
+	<h1>위메프에 문의하기</h1>
+	<div class="box_gray">
+		<div>
+			<label>문의사유</label>
+			<select name="refund_type" id="refund_type">
+				<option value="">선택</option>
+				<option value="반품배송비 미동봉">반품배송비 미동봉</option>
+				<option value="반품배송 불가">반품배송 불가</option>
+				<option value="환불문의">환불문의</option>
+				<option value="교환문의">교환문의</option>
+				<option value="위메프문의">위메프문의</option>
+				<option value="상품관련문의">상품관련문의</option>
+				<option value="기타">기타</option>
+			</select>
+		</div>
+	</div>
+	<h2><span>문의내용</span><span class="option_txt">반품에 문제가 있을시,고객센터에 문의글을 남겨주세요.</span></h2>
+	<textarea name="refund_ask_text" id="refund_ask_text" wrap="hard"></textarea>
+
+	<div class="btn_area">
+		<button type="button" class="btn_wht_big" id="btn_ask_ok">저장</button>
+		<button type="button" class="btn_gray_big" onClick="window.close();">취소</button>
+	</div>
+
+</form>
+
+</div>
+
+<script>
+
+var defaultText = "배송 상품에 대한 확인 요청이 별도로 필요한 경우\n이 곳에 내용을 적어주세요.\n\n고객센터에서 확인 후 처리해 드립니다. ";
+
+$(document).ready(function(){
+
+	$("#refund_ask_text").val(defaultText);
+	$("#refund_ask_text").focus(function(){
+		if ($("#refund_ask_text").val() == defaultText) $("#refund_ask_text").val('');
+	});
+
+	$("#refund_ask_text").blur(function(){
+		if ($("#refund_ask_text").val() == '') $("#refund_ask_text").val(defaultText);
+	});
+	
+	// 고객사문의 등록 시작.
+	$("#btn_ask_ok").click(function(){
+		if ($("#refund_ask_text").val() == defaultText) 
+		{
+			alert('문의 내용은 반드시 입력해야만 합니다.');
+			return;
+		}
+		
+		if ($("#refund_type").val() == '' ) {
+			alert("문의사유를 선택해 주세요.");
+			$("#refund_type").focus();
+			return false;
+		}else if ($("#refund_ask_text").val() == '') {
+			alert("문의내용을 입력해 주세요.");
+			$("#refund_ask_text").focus();
+			return false;
+		}
+		else
+		{
+			$.ajax({
+				type: 'POST',
+				url: '/dealer/refund/refund_ask_pop_ok',
+				data: $('#refund_ask').serializeArray(),
+				dataType: "text",
+				success: function(data){
+					if(data.retcode == 'SUCCESS') {
+						alert("등록이 완료되었습니다.");
+						opener.document.location.reload();
+						self.close();
+					}else{
+						alert("에러 발생! 잠시후 다시 시도해 주세요1.");
+					}
+					
+				},
+				error: function(){
+					alert("에러 발생! 잠시후 다시 시도해 주세요2");
+				},
+				dataType: "json"
+			});
+		}
+		
+	});
+});
+
+</script>
+
+
+</body>
+
+</html>
